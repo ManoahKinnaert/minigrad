@@ -20,11 +20,14 @@ W3 = Tensor.randn(16, 1)
 b3 = Tensor.zeros(1)
 
 def forward():
-    h1 = X.dot(w1)
+    l1 = (X.dot(W1) + b1).tanh()
+    l2 = (l1.dot(W2) + b2).tanh()
+    return l2.dot(W3) + b3 
 
 # train without the use of optimizers
-def non_optim_train():
-    pass 
+def non_optim_train(lr=0.01, epochs=1000):
+    for epoch in range(epochs):
+        y_pred = forward() 
 
 
 # example without use of optimizers
