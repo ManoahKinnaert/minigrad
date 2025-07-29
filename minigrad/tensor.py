@@ -33,4 +33,8 @@ class Tensor:
         for tensor, grad in zip(self.ctx._prev, grads):
             tensor.backward(grad)
 
+    def randn(*args, **kwargs):
+        return Tensor(data=np.random.randn(*args, **kwargs))
     
+    def zeros(*args, **kwargs):
+        return Tensor(data=np.zeros(*args, **kwargs))

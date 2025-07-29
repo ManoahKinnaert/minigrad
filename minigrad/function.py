@@ -37,7 +37,7 @@ class Mul(Function):
     def backward(ctx: c.Context, grad_out):
         x, y = ctx._prev 
         return y.data * grad_out, x.data * grad_out 
-    
+
 class Relu(Function):
     @staticmethod
     def forward(input):
