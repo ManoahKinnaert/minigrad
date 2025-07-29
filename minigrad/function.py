@@ -1,6 +1,6 @@
 import numpy as np
-import tensor as t
-import context as c
+import minigrad.tensor as t
+import minigrad.context as c
 
 class Function:
     @staticmethod
@@ -68,7 +68,7 @@ class Relu(Function):
 class Sigmoid(Function):
     @staticmethod
     def forward(input):
-        sig = 1 / (1 * np.exp(-input.data))
+        sig = 1 / (1 + np.exp(-input.data))
         ctx = c.Context()
         ctx.save_for_backward(t.Tensor(sig))
         ctx.function = Sigmoid

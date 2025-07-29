@@ -1,5 +1,5 @@
 import numpy as np
-import function as f
+import minigrad.function as f
 
 class Tensor:
     def __init__(self, data, ctx=None):
@@ -52,26 +52,42 @@ class Tensor:
     def mean(self):
         return self.sum() * (1.0 / self.data.size)
     
-    def logsoftmax(self):
+    def logsoftmax(self):   
         return f.LogSoftmax.forward(self)
 
     def backward(self, grad_out=None):
         if grad_out is None:
             # default gradient is 1
             grad_out = np.ones_like(self.data)
-
+        
+        # Handle broadcasting: sum over broadcasted dimensions
+        # and reshape to match self.data shape
+        grad_out = np.array(grad_out)  # Ensure it's a numpy array
+        
+        # Sum over dimensions that were broadcasted
+        while grad_out.ndim > self.data.ndim:
+            grad_out = grad_out.sum(axis=0)
+        
+        for i in range(self.data.ndim):
+            if self.data.shape[i] == 1 and grad_out.shape[i] > 1:
+                grad_out = grad_out.sum(axis=i, keepdims=True)
+        
+        # Ensure shapes match exactly
+        grad_out = grad_out.reshape(self.data.shape)
+        
         self.grad += grad_out
+        
         # check for leaf node
         if self.ctx is None:
-            return 
+            return
         
         grads = self.ctx.function.backward(self.ctx, grad_out)
         if not isinstance(grads, (tuple, list)):
             grads = (grads,)
+        
         for tensor, grad in zip(self.ctx._prev, grads):
             tensor.backward(grad)
     
-
 
     @staticmethod
     def randn(*args, **kwargs):
