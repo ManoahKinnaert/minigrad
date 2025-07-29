@@ -17,13 +17,18 @@ b1 = Tensor.zeros(16)
 W2 = Tensor.randn(16, 16)
 b2 = Tensor.zeros(16)
 
-W3 = Tensor.randn(16, 1)
-b3 = Tensor.zeros(1)
+W3 = Tensor.randn(16, 16)
+b3 = Tensor.zeros(16)
+
+W4 = Tensor.randn(16, 1)
+b4 = Tensor.zeros(1)
+
 
 def forward():
     l1 = (X.dot(W1) + b1).tanh()
     l2 = (l1.dot(W2) + b2).tanh()
-    return l2.dot(W3) + b3 
+    l3 = (l2.dot(W3) + b3).tanh()
+    return l3.dot(W4) + b4
 
 def plot_fitted_curve():
     y_pred = forward()
@@ -36,7 +41,7 @@ def plot_fitted_curve():
     plt.show()
 
 # train without the use of optimizers
-def non_optim_train(lr=0.01, epochs=1000):
+def non_optim_train(lr=0.075, epochs=60000):
     for epoch in range(epochs):
         y_pred = forward() 
 
@@ -46,11 +51,11 @@ def non_optim_train(lr=0.01, epochs=1000):
         loss.backward()
 
         # update 
-        for param in [W1, b1, W2, b2, W3, b3]:
+        for param in [W1, b1, W2, b2, W3, b3, W4, b4]:
             param.data -= lr * param.grad 
         
         # Reset 
-        for param in [W1, b1, W2, b2, W3, b3]:
+        for param in [W1, b1, W2, b2, W3, b3, W4, b4]:
             param.grad = 0
 
         # print loss every 100 epochs
