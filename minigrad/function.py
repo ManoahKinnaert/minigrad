@@ -4,11 +4,11 @@ import context as c
 
 class Function:
     @staticmethod
-    def forward(*args):
+    def forward(*args, **kwargs):
         raise NotImplementedError("For a custom function you need to implement a forward function!")
 
     @staticmethod
-    def backward(*args):
+    def backward(*args, **kwargs):
         raise NotImplementedError("For a custom function you need to implement a backward function!")
     
 ## some basic functions
