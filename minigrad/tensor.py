@@ -19,6 +19,17 @@ class Tensor:
             other = Tensor(other)
         return f.Mul.forward(self, other)
     
+    def dot(self, other):
+        if not isinstance(other, Tensor):
+            other = Tensor(other)
+        return f.Dot.forward(self, other)
+    
+    def relu(self):
+        return f.Relu.forward(self)
+    
+    def sigmoid(self):
+        return f.Sigmoid.forward(self)
+
     def backward(self, grad_out=None):
         if grad_out is None:
             # default gradient is 1

@@ -20,7 +20,7 @@ W3 = Tensor.randn(16, 1)
 b3 = Tensor.zeros(1)
 
 def forward():
-    pass 
+    h1 = X.dot(w1)
 
 # train without the use of optimizers
 def non_optim_train():
