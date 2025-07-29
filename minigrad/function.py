@@ -38,6 +38,19 @@ class Mul(Function):
         x, y = ctx._prev 
         return y.data * grad_out, x.data * grad_out 
 
+class Dot(Function):
+    @staticmethod
+    def forward(x: t.Tensor, y: t.Tensor):
+        ctx = c.Context()
+        ctx.save_for_backward(x, y)
+        ctx.function = Dot 
+        return t.Tensor(np.dot(x.data, y.data), ctx=ctx)
+
+    @staticmethod 
+    def backward(ctx: c.Context, grad_out):
+        x, y = ctx._prev 
+        return np.dot(grad_out, y.data.T), np.dot(x.data.T, grad_out)
+
 class Relu(Function):
     @staticmethod
     def forward(input):
