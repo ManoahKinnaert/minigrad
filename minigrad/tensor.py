@@ -29,6 +29,9 @@ class Tensor:
     
     def sigmoid(self):
         return f.Sigmoid.forward(self)
+    
+    def tanh(self):
+        return f.Tanh.forward(self)
 
     def backward(self, grad_out=None):
         if grad_out is None:

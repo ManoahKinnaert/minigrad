@@ -77,3 +77,17 @@ class Sigmoid(Function):
     def backward(ctx: c.Context, grad_out):
         out = ctx._prev 
         return (out.data * (1 - out.data)) * grad_out 
+
+class Tanh(Function):
+    @staticmethod 
+    def forward(input):
+        ctx = c.Context()
+        ctx.save_for_backward(input)
+        ctx.function = Tanh
+        return t.Tensor(np.tanh(input.data), ctx=ctx)
+
+    @staticmethod 
+    def backward(ctx: c.Context, grad_out):
+        out = ctx._prev 
+        return (1 - out.data ** 2) * grad_out 
+    
