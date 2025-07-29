@@ -2,6 +2,7 @@ from minigrad import Tensor
 from minigrad import function as f 
 import numpy as np
 
+import matplotlib.pyplot as plt
 
 # create training data
 np.random.seed(0)
@@ -24,12 +25,43 @@ def forward():
     l2 = (l1.dot(W2) + b2).tanh()
     return l2.dot(W3) + b3 
 
+def plot_fitted_curve():
+    y_pred = forward()
+
+    # plot 
+    fix, ax = plt.subplots()
+    ax.plot(X.data, y.data, label="Target sin", lw=4)
+    ax.plot(X.data, y_pred.data, label="Prediction", lw=2)
+    ax.legend()
+    plt.show()
+
 # train without the use of optimizers
 def non_optim_train(lr=0.01, epochs=1000):
     for epoch in range(epochs):
         y_pred = forward() 
 
+        # Loss: mean squared error 
+        loss = ((y_pred - y) * (y_pred - y)).mean()
+        # backward
+        loss.backward()
+
+        # update 
+        for param in [W1, b1, W2, b2, W3, b3]:
+            param.data -= lr * param.grad 
+        
+        # Reset 
+        for param in [W1, b1, W2, b2, W3, b3]:
+            param.grad = 0
+
+        # print loss every 100 epochs
+        if not epoch % 100:
+            print(f"Epoch {epoch}: loss = {loss.data:.6f}")
+
 
 # example without use of optimizers
 def non_optim_example():
-    pass
+    non_optim_train()
+    plot_fitted_curve()
+
+if __name__ == "__main__":
+    non_optim_example()
