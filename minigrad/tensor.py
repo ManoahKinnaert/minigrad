@@ -87,7 +87,9 @@ class Tensor:
         
         for tensor, grad in zip(self.ctx._prev, grads):
             tensor.backward(grad)
-    
+   
+    def zero_grad(self):
+        self.grad = np.zeros_like(self.data)
 
     @staticmethod
     def randn(*args, **kwargs):
