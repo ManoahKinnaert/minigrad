@@ -51,6 +51,11 @@ class Tensor:
     
     def mean(self):
         return self.sum() * (1.0 / self.data.size)
+
+    def __pow__(self, other):
+        if not isinstance(other, Tensor):
+            other = Tensor(other)
+        return f.Pow.forward(self, other)
     
     def logsoftmax(self):   
         return f.LogSoftmax.forward(self)

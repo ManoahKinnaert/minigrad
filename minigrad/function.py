@@ -51,6 +51,21 @@ class Dot(Function):
         x, y = ctx._prev 
         return np.dot(grad_out, y.data.T), np.dot(x.data.T, grad_out)
 
+class Pow(Function):
+    @staticmethod
+    def forward(base, power):
+        ctx = c.Context()
+        ctx.save_for_backward(base, power)
+        ctx.function = Pow
+        return t.Tensor(np.power(base.data, power.data), ctx=ctx)
+
+    @staticmethod
+    def backward(ctx: c.Context, grad_out):
+        base, power = ctx._prev
+        grad_base = power.data * np.power(base.data, power.data - 1) * grad_out
+        grad_power = np.power(base.data, power.data) * np.log(base.data) * grad_out
+        return grad_base, grad_power
+
 class Relu(Function):
     @staticmethod
     def forward(input):
@@ -64,7 +79,6 @@ class Relu(Function):
         input, = ctx._prev 
         return (input.data > 0) * grad_out 
     
-
 class Sigmoid(Function):
     @staticmethod
     def forward(input):
