@@ -1,5 +1,5 @@
 import numpy as np
-import minigrad.function as f
+import minigrad.core.function as f
 
 class Tensor:
     def __init__(self, data, ctx=None):

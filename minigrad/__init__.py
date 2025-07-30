@@ -1,3 +1,3 @@
-from .context import Context
-from .function import *
-from .tensor import Tensor
+from .core.context import Context
+from .core.function import *
+from .core.tensor import Tensor

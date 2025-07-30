@@ -1,6 +1,7 @@
 import numpy as np
-from minigrad.tensor import Tensor 
-from minigrad.context import Context 
+from minigrad.core.tensor import Tensor 
+from minigrad.core.context import Context 
+
 class Function:
     @staticmethod
     def forward(*args, **kwargs):

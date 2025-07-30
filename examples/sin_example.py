@@ -1,5 +1,5 @@
 from minigrad import Tensor 
-from minigrad import function as f 
+from minigrad.core import function as f 
 from minigrad.nn import Model
 import numpy as np
 

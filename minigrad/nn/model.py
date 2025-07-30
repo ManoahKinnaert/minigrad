@@ -1,46 +1,7 @@
-from minigrad.tensor import Tensor
-from minigrad.function import *
-import numpy as np
-
-   
-class Module:
-    def zero_grad(self):
-        for p in self.parameters():
-            p.zero_grad()
-
-    def parameters(self):
-        pass 
-
-class Layer(Module):
-    def __init__(self, nin: int, nout: int, activation: Function=None, **kwargs):
-        self._nneurons: int = nout
-        self._ninputs: int = nin
-        self.activation = activation
-        # init weights
-        self.w: Tensor = Tensor.randn(nin, nout)
-        # init biases
-        self.b: Tensor = Tensor.zeros(nout)
-
-    def parameters(self):
-        return [self.w, self.b]
-
-    def __repr__(self):
-        return f"Layer({self._ninputs} Inputs and {self._nneurons} Neurons)"
-
-    def forward(self, tin: Tensor):
-        l = tin.dot(self.w) + self.b
-        if self.activation:
-            return self.activation.forward(l)
-        return l
-
-class Loss(Module):
-    def calculate(self, *args, **kwargs) -> Tensor:
-        raise NotImplementedError("To implement loss you must define how to calculate the loss.") 
-
-class MeanSquared(Loss):
-    @staticmethod
-    def calculate(pred, y) -> Tensor:
-        return ((pred - y) ** 2).mean()
+from minigrad.core import Tensor 
+from minigrad.core import Function
+from minigrad.nn import Layer
+from minigrad.nn.loss import *
 
 class Model(Module):
     def __init__(self):
