@@ -1,5 +1,6 @@
 from minigrad import Tensor 
 from minigrad import function as f 
+from minigrad.nn import Model
 import numpy as np
 
 import matplotlib.pyplot as plt
@@ -10,28 +11,16 @@ np.random.seed(0)
 X = Tensor(np.linspace(-2 * np.pi, 2 * np.pi, 200).reshape(-1, 1))
 y = Tensor(np.sin(X.data))
 
-# define model 
-W1 = Tensor.randn(1, 16)
-b1 = Tensor.zeros(16)
+# define a model
+model = Model()
+model.add_layer(nin=1, nout=16, activation=f.Tanh)
+model.add_layer(nin=16, nout=16, activation=f.Tanh)
+model.add_layer(nin=16, nout=16, activation=f.Tanh)
+model.add_layer(nin=16, nout=1)
 
-W2 = Tensor.randn(16, 16)
-b2 = Tensor.zeros(16)
-
-W3 = Tensor.randn(16, 16)
-b3 = Tensor.zeros(16)
-
-W4 = Tensor.randn(16, 1)
-b4 = Tensor.zeros(1)
-
-
-def forward():
-    l1 = (X.dot(W1) + b1).tanh()
-    l2 = (l1.dot(W2) + b2).tanh()
-    l3 = (l2.dot(W3) + b3).tanh()
-    return l3.dot(W4) + b4
 
 def plot_fitted_curve():
-    y_pred = forward()
+    y_pred = model.forward()
 
     # plot 
     fix, ax = plt.subplots()
@@ -42,26 +31,8 @@ def plot_fitted_curve():
 
 # train without the use of optimizers
 def non_optim_train(lr=0.075, epochs=60000):
-    for epoch in range(epochs):
-        y_pred = forward() 
-
-        # Loss: mean squared error 
-        loss = ((y_pred - y) * (y_pred - y)).mean()
-        # backward
-        loss.backward()
-
-        # update 
-        for param in [W1, b1, W2, b2, W3, b3, W4, b4]:
-            param.data -= lr * param.grad 
-        
-        # Reset 
-        for param in [W1, b1, W2, b2, W3, b3, W4, b4]:
-            param.grad = 0
-
-        # print loss every 100 epochs
-        if not epoch % 100:
-            print(f"Epoch {epoch}: loss = {loss.data:.6f}")
-
+    model.set_training_data(X, y)
+    model.train(lr=lr, epochs=epochs, debug=True)
 
 # example without use of optimizers
 def non_optim_example():
