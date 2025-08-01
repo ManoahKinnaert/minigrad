@@ -1,3 +1,6 @@
+"""
+Define loss functions.
+"""
 from minigrad.core import Tensor
 from minigrad.nn import Module
 

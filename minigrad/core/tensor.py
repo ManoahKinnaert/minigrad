@@ -1,3 +1,6 @@
+"""
+Define Tensor class.
+"""
 import numpy as np
 import minigrad.core.function as f
 

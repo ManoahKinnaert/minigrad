@@ -1,3 +1,6 @@
+"""
+Define module class.
+"""
 class Module:
     def zero_grad(self):
         for p in self.parameters():

@@ -1,3 +1,6 @@
+"""
+Define activation functions.
+"""
 import numpy as np
 from minigrad.core.tensor import Tensor 
 from minigrad.core.context import Context 

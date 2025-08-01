@@ -1,3 +1,6 @@
+"""
+Define layers.
+"""
 from minigrad.core import Function 
 from minigrad.core import Tensor 
 from minigrad.nn import Module

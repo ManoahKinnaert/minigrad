@@ -1,3 +1,6 @@
+"""
+Define a model class.
+"""
 from minigrad.core import Tensor 
 from minigrad.core import Function
 from minigrad.nn import Layer

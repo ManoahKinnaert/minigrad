@@ -1,3 +1,6 @@
+"""
+Define context class.
+"""
 class Context:
     def __init__(self, prev: list=None):
         self._prev = prev
