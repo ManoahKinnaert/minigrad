@@ -7,12 +7,13 @@ from minigrad.nn import Layer
 from minigrad.nn.loss import *
 import minigrad.nn.optim as optim
 class Model(Module):
-    def __init__(self):
+    def __init__(self, X: Tensor=None, y: Tensor=None, loss: Loss=MeanSquared, optimizer: optim.Optimizer=optim.SGD):
         self.layers = []
-        self.X: Tensor = None 
-        self.y: Tensor = None 
-        self.loss_function: Loss = MeanSquared   # default to mean squared loss 
-        self.optim = optim.SGD   # SGD optimizer by default
+        self.X: Tensor = X 
+        self.y: Tensor = y 
+        self.loss_function: Loss = loss  # default to mean squared loss 
+        self.optim_class = optimizer  # SGD optimizer by default
+        self.optim = None
 
     def add_layer(self, nin: int, nout: int, activation: Function=None, **kwargs):
         self.layers.append(Layer(nin, nout, activation))
@@ -29,6 +30,7 @@ class Model(Module):
     
     # TODO: Optimizer to still be implemented and multi batch too
     def train(self, lr, epochs, batch=1, debug=False):
+        self.optim = self.optim_class(model=self, lr=lr)
         for epoch in range(epochs):
             # forward pass + loss
             pred = self.forward()
@@ -36,7 +38,7 @@ class Model(Module):
             # run through backwards pass
             loss.backward()
             # update params
-            self.optim(lr=lr, model=self).step()
+            self.optim.step()
 
             # print the loss and TODO: other useful things
             if debug and epoch % 100:

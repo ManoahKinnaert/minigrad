@@ -1,4 +1,3 @@
-from minigrad.nn import Model
 import numpy as np
 
 class Optimizer:
@@ -25,7 +24,7 @@ class SGD(Optimizer):
 For details look here: https://arxiv.org/abs/1412.6980
 """
 class Adam(Optimizer):
-    def __init__(self, model: Model, lr=0.001, b1=0.9, b2=0.999, eps=1e-8):
+    def __init__(self, model, lr=0.001, b1=0.9, b2=0.999, eps=1e-8):
         super().__init__(model, lr)
         self.b1 = b1 
         self.b2 = b2 
