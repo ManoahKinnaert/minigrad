@@ -43,7 +43,7 @@ class Model(Module):
 
             # print the loss and other things
             if debug:
-                t.set_description(f"Epoch: {epoch}, loss: {loss.data:.6f}")
+                t.set_description(f"Epoch: {epoch + 1}, loss: {loss.data:.6f}")
     
     def parameters(self):
         return [p for layer in self.layers for p in layer.parameters()]
