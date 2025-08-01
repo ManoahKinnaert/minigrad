@@ -60,6 +60,9 @@ class Tensor:
             other = Tensor(other)
         return f.Pow.forward(self, other)
     
+    def sqrt(self):
+        return self ** Tensor(0.5)
+    
     def logsoftmax(self):   
         return f.LogSoftmax.forward(self)
 
@@ -106,3 +109,15 @@ class Tensor:
     @staticmethod
     def zeros(*args, **kwargs):
         return Tensor(data=np.zeros(*args, **kwargs))
+    
+    @staticmethod
+    def zeros_like(*args, **kwargs):
+        return Tensor(data=np.zeros_like(*args, **kwargs))
+    
+    @staticmethod
+    def ones(*args, **kwargs):
+        return Tensor(data=np.ones(*args, **kwargs))
+    
+    @staticmethod
+    def ones_like(*args, **kwargs):
+        return Tensor(data=np.ones_like(*args, **kwargs))

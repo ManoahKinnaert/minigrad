@@ -48,3 +48,5 @@ class Model(Module):
             if debug and epoch % 100:
                 print(f"Epoch: {epoch}: loss = {loss.data:.6f}")
     
+    def parameters(self):
+        return [p for layer in self.layers for p in layer.parameters()]
