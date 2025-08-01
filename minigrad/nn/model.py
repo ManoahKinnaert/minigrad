@@ -6,6 +6,7 @@ from minigrad.core import Function
 from minigrad.nn import Layer
 from minigrad.nn.loss import *
 import minigrad.nn.optim as optim
+from tqdm import trange
 class Model(Module):
     def __init__(self, X: Tensor=None, y: Tensor=None, loss: Loss=MeanSquared, optimizer: optim.Optimizer=optim.SGD):
         self.layers = []
@@ -31,7 +32,7 @@ class Model(Module):
     # TODO: Optimizer to still be implemented and multi batch too
     def train(self, lr, epochs, batch=1, debug=False):
         self.optim = self.optim_class(model=self, lr=lr)
-        for epoch in range(epochs):
+        for epoch in (t := trange(epochs)):
             # forward pass + loss
             pred = self.forward()
             loss = self.loss_function.calculate(pred, self.y)
@@ -40,9 +41,9 @@ class Model(Module):
             # update params
             self.optim.step()
 
-            # print the loss and TODO: other useful things
-            if debug and epoch % 100:
-                print(f"Epoch: {epoch}: loss = {loss.data:.6f}")
+            # print the loss and other things
+            if debug:
+                t.set_description(f"Epoch: {epoch}, loss: {loss.data:.6f}")
     
     def parameters(self):
         return [p for layer in self.layers for p in layer.parameters()]
