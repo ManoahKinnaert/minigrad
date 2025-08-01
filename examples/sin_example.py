@@ -1,7 +1,7 @@
 from minigrad import Tensor 
 from minigrad.core import function as f 
 from minigrad.nn import Model
-from minigrad.nn.optim import Adam, SGD
+from minigrad.nn import optim
 import numpy as np
 
 import matplotlib.pyplot as plt
@@ -13,7 +13,7 @@ X = Tensor(np.linspace(-2 * np.pi, 2 * np.pi, 200).reshape(-1, 1))
 y = Tensor(np.sin(X.data))
 
 # define a model
-model = Model(X, y, optimizer=Adam)
+model = Model(X, y, optimizer=optim.Adam)
 model.add_layer(nin=1, nout=16, activation=f.Sigmoid)
 model.add_layer(nin=16, nout=16, activation=f.Relu)
 model.add_layer(nin=16, nout=16, activation=f.Tanh)
