@@ -15,7 +15,7 @@ class Model(Module):
         self.optim_class = optimizer  # SGD optimizer by default
         self.optim = None
 
-    def add_layer(self, nin: int, nout: int, activation: Function=None, **kwargs):
+    def create_layer(self, nin: int, nout: int, activation: Function=None, **kwargs):
         self.layers.append(Layer(nin, nout, activation))
 
     def set_training_data(self, X: Tensor, y: Tensor):

@@ -14,10 +14,10 @@ y = Tensor(np.sin(X.data))
 
 # define a model
 model = Model(X, y, optimizer=optim.Adam)
-model.add_layer(nin=1, nout=16, activation=f.Sigmoid)
-model.add_layer(nin=16, nout=16, activation=f.Relu)
-model.add_layer(nin=16, nout=16, activation=f.Tanh)
-model.add_layer(nin=16, nout=1)
+model.create_layer(nin=1, nout=16, activation=f.Sigmoid)
+model.create_layer(nin=16, nout=16, activation=f.Relu)
+model.create_layer(nin=16, nout=16, activation=f.Tanh)
+model.create_layer(nin=16, nout=1)
 
 
 def plot_fitted_curve():
