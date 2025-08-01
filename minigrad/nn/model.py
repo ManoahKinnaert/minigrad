@@ -5,14 +5,14 @@ from minigrad.core import Tensor
 from minigrad.core import Function
 from minigrad.nn import Layer
 from minigrad.nn.loss import *
-
+import minigrad.nn.optim as optim
 class Model(Module):
     def __init__(self):
         self.layers = []
         self.X: Tensor = None 
         self.y: Tensor = None 
         self.loss_function: Loss = MeanSquared   # default to mean squared loss 
-        self.optim = None   # no optimizer by default -> will change this in the future
+        self.optim = optim.SGD   # SGD optimizer by default
 
     def add_layer(self, nin: int, nout: int, activation: Function=None, **kwargs):
         self.layers.append(Layer(nin, nout, activation))
@@ -36,13 +36,7 @@ class Model(Module):
             # run through backwards pass
             loss.backward()
             # update params
-            for layer in self.layers:
-                layer.w.data -= lr * layer.w.grad 
-                layer.b.data -= lr * layer.b.grad
-            # Reset
-            for layer in self.layers:
-                layer.w.zero_grad()
-                layer.b.zero_grad()
+            self.optim(lr=lr, model=self).step()
 
             # print the loss and TODO: other useful things
             if debug and epoch % 100:
