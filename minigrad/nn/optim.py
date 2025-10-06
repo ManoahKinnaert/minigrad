@@ -9,13 +9,28 @@ class Optimizer:
         raise NotImplementedError("To implement an optimizer you must implement the step function.")
 
 class SGD(Optimizer):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, decay, momentum, dampening, maximize: bool=True, nesterov: bool=False, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.decay = decay
+        self.momentum = momentum
+        self.dampening = dampening
+        self.maximize = maximize
+        self.nesterov = nesterov
     
     def step(self):
         # update params
         for param in self.model.parameters():
-            param.data -= self.lr * param.grad 
+            if self.maximize:
+                param.data -= self.lr * param.grad 
+            else:
+                param.data += self.lr * param.grad
+
+            if self.decay != 0:
+                param.data += self.decay * param.grad
+            if self.momentum != 0:
+                if self.nesterov:
+                    pass 
+                
             # reset grad
             param.zero_grad()
             
@@ -48,3 +63,4 @@ class Adam(Optimizer):
             t.data = t.data - self.lr * m / (np.sqrt(v) + self.eps)
             # reset grad 
             t.zero_grad()
+
