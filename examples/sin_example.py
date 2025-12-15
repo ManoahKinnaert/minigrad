@@ -14,9 +14,9 @@ y = Tensor(np.sin(X.data))
 
 # define a model
 model = Model(X, y, optimizer=optim.Adam)
-model.create_layer(nin=1, nout=256, activation=f.Sigmoid)
-model.create_layer(nin=256, nout=256, activation=f.Sigmoid)
-model.create_layer(nin=256, nout=1)
+model.create_layer(nin=1, nout=64, activation=f.Relu)
+model.create_layer(nin=64, nout=64, activation=f.Relu)
+model.create_layer(nin=64, nout=1)
 
 def plot_fitted_curve():
     y_pred = model.forward()
@@ -29,5 +29,5 @@ def plot_fitted_curve():
     plt.show()
 
 if __name__ == "__main__":
-    model.train(lr=0.8, epochs=1500, debug=True)
+    model.train(lr=0.2, epochs=10000, debug=True)
     plot_fitted_curve()
