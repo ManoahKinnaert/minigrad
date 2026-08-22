@@ -15,8 +15,8 @@ class Layer(Module):
         # init biases
         self.b: Tensor = Tensor.zeros(nout)
 
-    def parameters(self):
-        return [self.w, self.b]
+    @property
+    def parameters(self): return [self.w, self.b]
 
     def __repr__(self):
         return f"Layer({self._ninputs} Inputs and {self._nneurons} Neurons)"

@@ -19,7 +19,7 @@ class SGD(Optimizer):
     
     def step(self):
         # update params
-        for param in self.model.parameters():
+        for param in self.model.parameters:
             if self.maximize:
                 param.data -= self.lr * param.grad 
             else:
@@ -44,13 +44,13 @@ class Adam(Optimizer):
         self.b1 = b1 
         self.b2 = b2 
         self.eps = eps 
-        self.m0 = [np.zeros_like(p.data) for p in model.parameters()]
-        self.v0 = [np.zeros_like(p.data) for p in model.parameters()]
+        self.m0 = [np.zeros_like(p.data) for p in model.parameters]
+        self.v0 = [np.zeros_like(p.data) for p in model.parameters]
         self.t = 0
 
     def step(self):
         self.t += 1
-        for i, t in enumerate(self.model.parameters()):
+        for i, t in enumerate(self.model.parameters):
             if t.grad is None:
                 continue
             # update biased moment estimates

@@ -17,6 +17,12 @@ class Model(Module):
         self.optim_class = optimizer  # SGD optimizer by default
         self.optim = None
 
+    @property
+    def n_samples(self): return 0 if self.X is None else self.X.data.shape[0]
+
+    @property 
+    def parameters(self): return [p for layer in self.layers for p in layer.parameters]
+
     def create_layer(self, nin: int, nout: int, activation: Function=None, **kwargs):
         self.layers.append(Layer(nin, nout, activation))
 
@@ -35,7 +41,7 @@ class Model(Module):
         return pred 
     
     # TODO: properly implement batching
-    def train(self, lr, epochs, batch=1, debug=False):
+    def train(self, lr, epochs, batch_size=1, debug=False):
         if self.X is None: raise ValueError("Training data has not been set: (at least) X is missing!")
         if self.y is None: raise ValueError("Training data has not been set: y is missing!")
 
@@ -46,8 +52,8 @@ class Model(Module):
             epoch_loss = 0
             n_batches = 0
 
-            for start in range(0, n_samples, batch):
-                end = min(start + batch, n_samples)
+            for start in range(0, n_samples, batch_size):
+                end = min(start + batch_size, n_samples)
 
                 X = self.X[start:end]
                 y = self.y[start:end]
@@ -71,6 +77,5 @@ class Model(Module):
         self.set_training_data(X, y)
         self.train(lr, epochs, batch, debug)
         self.clear_training_data()
-    
-    def parameters(self):
-        return [p for layer in self.layers for p in layer.parameters()]
+
+   
