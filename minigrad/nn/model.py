@@ -28,8 +28,8 @@ class Model(Module):
         self.X = None 
         self.y = None
 
-    def forward(self):
-        pred = self.X
+    def forward(self, X: Tensor):
+        pred = X
         for layer in self.layers:
             pred = layer.forward(pred)
         return pred 
@@ -39,7 +39,7 @@ class Model(Module):
         self.optim = self.optim_class(model=self, lr=lr)
         for epoch in (t := trange(epochs)):
             # forward pass + loss
-            pred = self.forward()
+            pred = self.forward(self.X)
             loss = self.loss_function.calculate(pred, self.y)
             # run through backwards pass
             loss.backward()

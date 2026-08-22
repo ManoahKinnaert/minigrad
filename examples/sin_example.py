@@ -19,7 +19,7 @@ model.create_layer(nin=64, nout=64, activation=f.Relu)
 model.create_layer(nin=64, nout=1)
 
 def plot_fitted_curve():
-    y_pred = model.forward()
+    y_pred = model.forward(X)
 
     # plot 
     fix, ax = plt.subplots()
