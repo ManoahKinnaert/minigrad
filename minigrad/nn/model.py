@@ -34,7 +34,7 @@ class Model(Module):
             pred = layer.forward(pred)
         return pred 
     
-    # TODO: Optimizer to still be implemented and multi batch too
+    # TODO: properly implement batching
     def train(self, lr, epochs, batch=1, debug=False):
         self.optim = self.optim_class(model=self, lr=lr)
         for epoch in (t := trange(epochs)):

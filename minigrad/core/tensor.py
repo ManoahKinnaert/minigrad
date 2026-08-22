@@ -34,6 +34,9 @@ class Tensor:
         if not isinstance(other, Tensor):
             other = Tensor(other)
         return self * Tensor(1.0 / other.data)
+
+    def __getitem__(self, key):
+        return Tensor(self.data[key])
     
     def dot(self, other):
         if not isinstance(other, Tensor):
