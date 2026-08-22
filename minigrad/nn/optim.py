@@ -6,7 +6,7 @@ class Optimizer:
         self.lr = lr 
     
     def step(self):
-        raise NotImplementedError("To implement an optimizer you must implement the step function.")
+        raise NotImplementedError("To implement an optimizer you must implement the step method.")
 
 class SGD(Optimizer):
     def __init__(self, decay, momentum, dampening, maximize: bool=True, nesterov: bool=False, *args, **kwargs):

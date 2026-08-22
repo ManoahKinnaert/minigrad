@@ -7,6 +7,7 @@ from minigrad.nn import Layer
 from minigrad.nn.loss import *
 import minigrad.nn.optim as optim
 from tqdm import trange
+
 class Model(Module):
     def __init__(self, X: Tensor=None, y: Tensor=None, loss: Loss=MeanSquared, optimizer: optim.Optimizer=optim.SGD):
         self.layers = []
