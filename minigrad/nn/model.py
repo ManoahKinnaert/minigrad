@@ -59,7 +59,7 @@ class Model(Module):
         if nin <= 0: raise ValueError("nin can't be smaller than or equal to zero")
         if nout <= 0: raise ValueError("nout can't be smaller than or equal to zero")
 
-        self.layers.append(Layer(nin, nout, activation))
+        self._layers.append(Layer(nin, nout, activation))
 
     def set_training_data(self, X: Tensor, y: Tensor):
         """
