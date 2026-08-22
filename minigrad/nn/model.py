@@ -79,7 +79,7 @@ class Model(Module):
             pred = layer.forward(pred)
         return pred 
     
-    def train(self, lr, epochs, batch_size=1, debug=False):
+    def train(self, lr: float, epochs: int, batch_size: int=1, debug: bool=False):
         """
         The train method which is called to train the model.
         The client may set the learning rate named lr, the epochs named epochs,
@@ -88,6 +88,9 @@ class Model(Module):
         """
         if self.X is None: raise ValueError("Training data has not been set: (at least) X is missing!")
         if self.y is None: raise ValueError("Training data has not been set: y is missing!")
+        if lr is None: raise ValueError("The learning rate can not be None.")
+        if epochs is None: raise ValueError("The amount of epochs can not be None.")
+        if epochs <= 0: raise ValueError("Epochs can't be smaller than or equal to 0, otherwise ")
 
         n_samples = self.n_samples
 
