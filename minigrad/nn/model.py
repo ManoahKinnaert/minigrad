@@ -24,6 +24,10 @@ class Model(Module):
         self.X = X 
         self.y = y 
 
+    def clear_training_data(self):
+        self.X = None 
+        self.y = None
+
     def forward(self):
         pred = self.X
         for layer in self.layers:
@@ -45,6 +49,13 @@ class Model(Module):
             # print the loss and other things
             if debug:
                 t.set_description(f"Epoch: {epoch + 1}, loss: {loss.data:.6f}")
+
+        self.clear_training_data()
+
+    def train_on_data(self, X: Tensor, y: Tensor, lr, epochs, batch=1, debug=False):
+        self.set_training_data(X, y)
+        self.train(lr, epochs, batch, debug)
+        self.clear_training_data()
     
     def parameters(self):
         return [p for layer in self.layers for p in layer.parameters()]
