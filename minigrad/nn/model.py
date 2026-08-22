@@ -45,7 +45,7 @@ class Model(Module):
         if self.X is None: raise ValueError("Training data has not been set: (at least) X is missing!")
         if self.y is None: raise ValueError("Training data has not been set: y is missing!")
 
-        n_samples = self.X.data.shape[0]
+        n_samples = self.n_samples
 
         self.optim = self.optim_class(model=self, lr=lr)
         for epoch in (t := trange(epochs)):
