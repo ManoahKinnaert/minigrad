@@ -29,5 +29,5 @@ def plot_fitted_curve():
     plt.show()
 
 if __name__ == "__main__":
-    model.train(lr=0.2, epochs=10000, debug=True)
+    model.train(lr=0.01, batch=64, epochs=10000, debug=True)
     plot_fitted_curve()

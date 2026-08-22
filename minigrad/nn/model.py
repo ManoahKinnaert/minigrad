@@ -39,19 +39,31 @@ class Model(Module):
         if self.X is None: raise ValueError("Training data has not been set: (at least) X is missing!")
         if self.y is None: raise ValueError("Training data has not been set: y is missing!")
 
+        n_samples = self.X.data.shape[0]
+
         self.optim = self.optim_class(model=self, lr=lr)
         for epoch in (t := trange(epochs)):
-            # forward pass + loss
-            pred = self.forward(self.X)
-            loss = self.loss_function.calculate(pred, self.y)
-            # run through backwards pass
-            loss.backward()
-            # update params
-            self.optim.step()
+            epoch_loss = 0
+            n_batches = 0
 
-            # print the loss and other things
+            for start in range(0, n_samples, batch):
+                end = min(start + batch, n_samples)
+
+                X = self.X[start:end]
+                y = self.y[start:end]
+
+                pred = self.forward(X)
+                loss = self.loss_function.calculate(pred, y)
+
+                loss.backward()
+                self.optim.step()
+
+                epoch_loss += loss.data 
+                n_batches += 1
+
+            # print the loss and other things (if debug is enabled)
             if debug:
-                t.set_description(f"Epoch: {epoch + 1}, loss: {loss.data:.6f}")
+                t.set_description(f"Epoch: {epoch + 1}, loss: {epoch_loss / n_batches:.6f}")
 
         self.clear_training_data()
 
