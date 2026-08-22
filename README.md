@@ -60,6 +60,8 @@ if __name__ == "__main__":
     model.train(lr=0.01, batch_size=64, epochs=10000, debug=True)
     plot_fitted_curve()
 ```
+And here you have a sine curve:
+![sine curve](./examples/sin_example/demo.png)
 
 Or just run the (same) example:
 ```bash
