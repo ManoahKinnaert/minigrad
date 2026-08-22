@@ -19,7 +19,7 @@ class Model(Module):
         self.X: Tensor = X 
         self.y: Tensor = y 
         self.loss_function: Loss = loss  # default to mean squared loss 
-        self.optim_class = optimizer  # SGD optimizer by default
+        self._optim_class = optimizer  # SGD optimizer by default
         self.optim = None
 
     @property
@@ -54,12 +54,20 @@ class Model(Module):
         """
         Create a new layer and add it to the internal layers representation.
         """
+        if nin is None: raise ValueError("nin can't be None")
+        if nout is None: raise ValueError("nout can't be None")
+        if nin <= 0: raise ValueError("nin can't be smaller than or equal to zero")
+        if nout <= 0: raise ValueError("nout can't be smaller than or equal to zero")
+
         self.layers.append(Layer(nin, nout, activation))
 
     def set_training_data(self, X: Tensor, y: Tensor):
         """
         Set the training data.
         """
+        if X is None: raise ValueError("Tensor X can't be None.")
+        if y is None: raise ValueError("Tensor y can't be None.")
+
         self.X = X 
         self.y = y 
 
@@ -74,6 +82,8 @@ class Model(Module):
         """
         Implementation of the forward pass.
         """
+        if X is None: raise ValueError("Tensor X can't be None.")
+
         pred = X
         for layer in self._layers:
             pred = layer.forward(pred)
@@ -88,13 +98,13 @@ class Model(Module):
         """
         if self.X is None: raise ValueError("Training data has not been set: (at least) X is missing!")
         if self.y is None: raise ValueError("Training data has not been set: y is missing!")
-        if lr is None: raise ValueError("The learning rate can not be None.")
-        if epochs is None: raise ValueError("The amount of epochs can not be None.")
+        if lr is None: raise ValueError("The learning rate can't be None.")
+        if epochs is None: raise ValueError("The amount of epochs can't be None.")
         if epochs <= 0: raise ValueError("Epochs can't be smaller than or equal to 0, otherwise ")
 
         n_samples = self.n_samples
 
-        self.optim = self.optim_class(model=self, lr=lr)
+        self.optim = self._optim_class(model=self, lr=lr)
         for epoch in (t := trange(epochs)):
             epoch_loss = 0
             n_batches = 0
