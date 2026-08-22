@@ -36,6 +36,9 @@ class Model(Module):
     
     # TODO: properly implement batching
     def train(self, lr, epochs, batch=1, debug=False):
+        if self.X is None: raise ValueError("Training data has not been set: (at least) X is missing!")
+        if self.y is None: raise ValueError("Training data has not been set: y is missing!")
+
         self.optim = self.optim_class(model=self, lr=lr)
         for epoch in (t := trange(epochs)):
             # forward pass + loss
