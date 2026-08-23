@@ -12,5 +12,8 @@ class Context:
     @function.setter
     def function(self, function): self._function = function 
 
+    @property 
+    def prev(self): return self._prev 
+
     def save_for_backward(self, *tensors):
         self._prev = tensors 

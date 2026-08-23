@@ -25,7 +25,7 @@ class Add(Function):
     
     @staticmethod
     def backward(ctx: Context, grad_out):
-        x, y = ctx._prev 
+        x, y = ctx.prev 
         return grad_out, grad_out 
     
 class Mul(Function):
@@ -38,7 +38,7 @@ class Mul(Function):
     
     @staticmethod
     def backward(ctx: Context, grad_out):
-        x, y = ctx._prev 
+        x, y = ctx.prev 
         return y.data * grad_out, x.data * grad_out 
 
 class Dot(Function):
@@ -51,7 +51,7 @@ class Dot(Function):
 
     @staticmethod 
     def backward(ctx: Context, grad_out):
-        x, y = ctx._prev 
+        x, y = ctx.prev 
         return np.dot(grad_out, y.data.T), np.dot(x.data.T, grad_out)
 
 class Pow(Function):
@@ -64,7 +64,7 @@ class Pow(Function):
 
     @staticmethod
     def backward(ctx: Context, grad_out):
-        base, power = ctx._prev
+        base, power = ctx.prev
         grad_base = power.data * np.power(base.data, power.data - 1) * grad_out
         grad_power = np.power(base.data, power.data) * np.log(base.data) * grad_out
         return grad_base, grad_power
@@ -79,7 +79,7 @@ class Relu(Function):
 
     @staticmethod
     def backward(ctx: Context, grad_out):
-        input, = ctx._prev 
+        input, = ctx.prev 
         return (input.data > 0) * grad_out 
     
 class Sigmoid(Function):
@@ -93,7 +93,7 @@ class Sigmoid(Function):
 
     @staticmethod 
     def backward(ctx: Context, grad_out):
-        sig, = ctx._prev 
+        sig, = ctx.prev 
         return grad_out * sig.data * (1 - sig.data)
 
 class Tanh(Function):
@@ -107,7 +107,7 @@ class Tanh(Function):
 
     @staticmethod 
     def backward(ctx: Context, grad_out):
-        tanh_val, = ctx._prev 
+        tanh_val, = ctx.prev 
         return (1 - tanh_val.data ** 2) * grad_out 
 
 class Sum(Function):
@@ -120,7 +120,7 @@ class Sum(Function):
     
     @staticmethod
     def backward(ctx: Context, grad_out):
-        input, = ctx._prev
+        input, = ctx.prev
         return grad_out * np.ones_like(input.data)
     
 class LogSoftmax(Function):
@@ -136,6 +136,6 @@ class LogSoftmax(Function):
 
     @staticmethod
     def backward(ctx: Context, grad_out):
-        (log_softmax,) = ctx._prev
+        (log_softmax,) = ctx.prev
         softmax = np.exp(log_softmax.data)
         return grad_out - softmax * np.sum(grad_out, axis=1, keepdims=True)
