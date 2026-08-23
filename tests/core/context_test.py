@@ -15,16 +15,20 @@ class ContextTest(unittest.TestCase):
     def test_save_for_backward_one_tensor_data(self):
         one = Tensor([1, 2, 3])
         self.testing_context.save_for_backward(one)
-        self.assertListEqual(list(one.data), list(self.testing_context._prev[0].data))
+        self.assertListEqual([list(one.data)], [list(t.data) for t in self.testing_context._prev])
 
     def test_save_for_backward_two_tensors_not_None(self):
         one = Tensor([1, 2, 3])
         two = Tensor([3, 4, 5, 2])
-        self;self.testing_context.save_for_backward(one, two)
+        self.testing_context.save_for_backward(one, two)
         self.assertIsNotNone(self.testing_context._prev)
 
     def test_save_for_backward_two_tensors_data(self):
-        pass 
+        one = Tensor([1, 2, 3])
+        two = Tensor([3, 4, 5, 2])
+        self.testing_context.save_for_backward(one, two)
+        self.assertListEqual([list(one.data), list(two.data)], [list(t.data) for t in self.testing_context._prev])
+
 
 if __name__ == "__main__":
     unittest.main()
