@@ -68,4 +68,11 @@ Or just run the (same) example:
 PYTHONPATH="." python examples/sin_example
 ```
 
+## Testing
+There is a testing suite (in progress).
+To run it, run the following:
+```bash
+python -m unittest discover -s tests
+```
+
 And last but not least... Have fun!
