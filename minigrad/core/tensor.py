@@ -6,6 +6,8 @@ import minigrad.core.function as f
 
 class Tensor:
     def __init__(self, data, ctx=None):
+        if data is None: raise ValueError("Tensor data can't be None!")
+
         self.data = np.array(data, dtype=float) 
         self.grad = np.zeros_like(self.data) 
         # context used for autograd graph construction
