@@ -3,19 +3,16 @@ A 'mini' grad engine for educational purposes.
 To understand how it works read the code.
 
 ## How to get going
-1) Create a virtual environment (unix / linux):
-```bash
-python -m venv venv && source venv/bin/activate
-```
 
-2) Get the latest version of pip:
+Install from source:
 ```bash
-pip install --upgrade pip
+git clone https://github.com/ManoahKinnaert/minigrad.git 
+cd minigrad
+pip install -e . 
 ```
-
-3) Install the requirements:
+Or install directly:
 ```bash
-pip install -r requirements.txt
+pip install git+https://github.com/ManoahKinnaert/minigrad.git
 ```
 
 And you're all set, for now at least...
