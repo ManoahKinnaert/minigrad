@@ -3,9 +3,10 @@ Define Tensor class.
 """
 import numpy as np
 import minigrad.core.function as f
+from minigrad.core.context import Context
 
 class Tensor:
-    def __init__(self, data, ctx=None):
+    def __init__(self, data, ctx: Context=None):
         if data is None: raise ValueError("Tensor data can't be None!")
 
         self.data = np.array(data, dtype=float) 
@@ -101,7 +102,7 @@ class Tensor:
         if not isinstance(grads, (tuple, list)):
             grads = (grads,)
         
-        for tensor, grad in zip(self.ctx._prev, grads):
+        for tensor, grad in zip(self.ctx.prev, grads):
             tensor.backward(grad)
    
     def zero_grad(self):
