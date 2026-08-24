@@ -1,4 +1,6 @@
 # minigrad
+[![Testing](https://github.com/ManoahKinnaert/minigrad/actions/workflows/testing.yml/badge.svg)](https://github.com/ManoahKinnaert/minigrad/actions/workflows/testing.yml)
+
 A 'mini' grad engine for educational purposes.
 To understand how it works read the code.
 
