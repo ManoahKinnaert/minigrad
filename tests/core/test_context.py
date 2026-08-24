@@ -29,5 +29,8 @@ class ContextTest(unittest.TestCase):
         self.testing_context.save_for_backward(one, two)
         self.assertListEqual([list(one.data), list(two.data)], [list(t.data) for t in self.testing_context._prev])
 
+    def test_save_for_backward_illegal(self):
+        self.assertRaises(ValueError, lambda: self.testing_context.save_for_backward(None))
+
 if __name__ == "__main__":
     unittest.main()

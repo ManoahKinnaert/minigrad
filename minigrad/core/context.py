@@ -16,4 +16,5 @@ class Context:
     def prev(self): return self._prev 
 
     def save_for_backward(self, *tensors):
+        if not tensors or any(t is None for t in tensors): raise ValueError("You can't save Nonetype for backward pass!")
         self._prev = tensors 
