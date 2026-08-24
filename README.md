@@ -75,4 +75,9 @@ To run it, run the following:
 python -m unittest discover -s tests
 ```
 
+To run with coverage, run the following:
+```bash
+coverage run -m unittest discover -s tests 
+```
+
 And last but not least... Have fun!
