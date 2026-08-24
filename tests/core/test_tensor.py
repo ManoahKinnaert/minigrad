@@ -4,6 +4,7 @@ This file houses unittests for the minigrad.core.Tensor class.
 import unittest
 import numpy as np
 from minigrad import Tensor
+from minigrad.testing import TensorAssertions
 
 class TensorTest(unittest.TestCase):
     def test_init_value_error(self):
@@ -18,7 +19,10 @@ class TensorTest(unittest.TestCase):
         self.assertEqual(100, Tensor.randn(100).data.size)
 
     def test_zeros_1d_length5(self):
-        np.testing.assert_array_equal(np.zeros(5), Tensor.zeros(5).data)
+        TensorAssertions.assert_compare_numpy(np.zeros(5), Tensor.zeros(5))
+
+    def test_zeros_1d_length100(self):
+        TensorAssertions.assert_compare_numpy(np.zeros(100), Tensor.zeros(100))
 
     def test_ones(self):
         pass 

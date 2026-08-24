@@ -6,18 +6,24 @@ import numpy as np
 
 class TensorAssertions:
     @staticmethod
-    def _tensor_compare_nonetype_check(tensor1: Tensor, tensor2: Tensor):
-        if tensor1 is None: raise AssertionError("tensor1 can't be of type Nonetype!")
-        if tensor2 is None: raise AssertionError("tensor2 can't be of type Nonetype!")
+    def _nonetype_check(*args):
+        for i, ar in enumerate(args):
+            if ar is None: raise AssertionError(f"Argument {i} can't be Nonetype.")
 
     @staticmethod
     def assert_equal(tensor1: Tensor, tensor2: Tensor):
-        TensorAssertions._tensor_compare_nonetype_check(tensor1, tensor2)
+        TensorAssertions._nonetype_check(tensor1, tensor2)
         if not np.array_equal(tensor1.data, tensor2.data):
             raise AssertionError("Tensors are not equal!")
 
     @staticmethod
-    def assert_equiv(tensor1, tensor2):
-        TensorAssertions._tensor_compare_nonetype_check(tensor1, tensor2)
+    def assert_equiv(tensor1: Tensor, tensor2: Tensor):
+        TensorAssertions._nonetype_check(tensor1, tensor2)
         if not np.array_equiv(tensor1.data, tensor2.data):
             raise AssertionError("Tensors are not equivalent!")
+
+    @staticmethod
+    def assert_compare_numpy(nparray: np.ndarray, tensor: Tensor):
+        TensorAssertions._nonetype_check(nparray, tensor)
+        if not np.array_equal(nparray, tensor.data):
+            raise AssertionError("nparray is not equal to tensor data!")
