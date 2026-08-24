@@ -13,10 +13,10 @@ class TensorTest(unittest.TestCase):
 
     # test static methods
     def test_randn_1d_length5(self):
-        self.assertEqual(5, Tensor.randn(5).data.size)
+        TensorAssertions.assert_tensor_shape((5,), Tensor.randn(5))
 
     def test_randn_1d_length100(self):
-        self.assertEqual(100, Tensor.randn(100).data.size)
+        TensorAssertions.assert_tensor_shape((100,), Tensor.randn(100))
 
     def test_zeros_1d_length5(self):
         TensorAssertions.assert_compare_numpy(np.zeros(5), Tensor.zeros(5))
