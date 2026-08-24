@@ -24,8 +24,11 @@ class TensorTest(unittest.TestCase):
     def test_zeros_1d_length100(self):
         TensorAssertions.assert_compare_numpy(np.zeros(100), Tensor.zeros(100))
 
-    def test_ones(self):
-        pass 
+    def test_ones_1d_lenght5(self):
+        TensorAssertions.assert_compare_numpy(np.ones(5), Tensor.ones(5))
+
+    def test_ones_1d_length100(self):
+        TensorAssertions.assert_compare_numpy(np.ones(100), Tensor.ones(100))
 
     def test_ones_like(self):
         pass 
