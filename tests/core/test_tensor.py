@@ -18,8 +18,20 @@ class TensorTest(unittest.TestCase):
     def test_randn_1d_length100(self):
         TensorAssertions.assert_tensor_shape((100,), Tensor.randn(100))
 
+    def test_randn_2d_5_by_5(self):
+        TensorAssertions.assert_tensor_shape((5, 5), Tensor.randn(5, 5))
+
+    def test_randn_2d_5_by_100(self):
+        TensorAssertions.assert_tensor_shape((5, 100), Tensor.randn(5, 100))
+
     def test_zeros_1d_length5(self):
         TensorAssertions.assert_compare_numpy(np.zeros(5), Tensor.zeros(5))
+
+    def test_zeros_2d_5_by_5(self):
+        TensorAssertions.assert_compare_numpy(np.zeros((5, 5)), Tensor.zeros((5, 5)))
+
+    def test_zeros_2d_5_by_100(self):
+        TensorAssertions.assert_compare_numpy(np.zeros((5, 100)), Tensor.zeros((5, 100)))
 
     def test_zeros_1d_length100(self):
         TensorAssertions.assert_compare_numpy(np.zeros(100), Tensor.zeros(100))
