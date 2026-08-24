@@ -8,3 +8,6 @@
 .*.sw?
 .idea
 .coverage
+build/
+dist/
+*.egg-info/
