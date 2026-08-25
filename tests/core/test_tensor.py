@@ -11,6 +11,11 @@ class TensorTest(unittest.TestCase):
         """Test data Nonetype""" 
         self.assertRaises(ValueError, lambda: Tensor(None, None))
 
+    def test_zero_grad(self):
+        tensor = Tensor.randn(5)
+        tensor.zero_grad()
+        TensorAssertions.assert_zeros(tensor.grad)
+
     # test static methods
     def test_randn_1d_length5(self):
         TensorAssertions.assert_tensor_shape((5,), Tensor.randn(5))

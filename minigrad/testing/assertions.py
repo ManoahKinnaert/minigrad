@@ -39,3 +39,8 @@ class TensorAssertions:
         TensorAssertions._nonetype_check(shape, tensor)
         TensorAssertions._valid_shape_check(shape)
         if tensor.data.shape != shape: raise AssertionError("tensor shape doesn't match shape!")
+
+    @staticmethod 
+    def assert_zeros(data: np.array):
+        TensorAssertions._nonetype_check(data)
+        if np.any(data): raise AssertionError("Numpy array does not consist of only zeros.")
