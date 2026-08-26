@@ -27,5 +27,6 @@ class LayerTest(unittest.TestCase):
     def test_init_activation_set_correct(self):
         self.assertEqual(Dot, Layer(1, 1, Dot).activation)
 
+
 if __name__ == "__main__":
     unittest.main()
