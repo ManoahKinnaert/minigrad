@@ -14,7 +14,7 @@ class Layer(Module):
 
         self._nneurons: int = nout
         self._ninputs: int = nin
-        self.activation = activation
+        self._activation = activation
         # init weights
         self.w: Tensor = Tensor.randn(nin, nout)
         # init biases
@@ -23,11 +23,17 @@ class Layer(Module):
     @property
     def parameters(self): return [self.w, self.b]
 
+    @property
+    def activation(self) -> Function: return self._activation
+
+    @activation.setter
+    def activation(self, new: Function): self._activation = new 
+
     def __repr__(self):
         return f"Layer({self._ninputs} Inputs and {self._nneurons} Neurons)"
 
     def forward(self, tin: Tensor):
         l = tin.dot(self.w) + self.b
-        if self.activation:
-            return self.activation.forward(l)
+        if self._activation:
+            return self._activation.forward(l)
         return l

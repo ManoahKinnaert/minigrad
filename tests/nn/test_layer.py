@@ -17,5 +17,9 @@ class LayerTest(unittest.TestCase):
     def test_init_nout_is_smaller_than_1(self):
         self.assertRaises(ValueError, lambda: Layer(1, 0))
 
+    def test_init_activation_default_none(self):
+        self.assertIsNone(Layer(1, 1).activation)
+
+
 if __name__ == "__main__":
     unittest.main()
