@@ -60,7 +60,19 @@ class TensorTest(unittest.TestCase):
     # test basic ops 
     def test_add_basic(self):
         TensorAssertions.assert_equal(Tensor([3]), Tensor([1]) + Tensor([2]))
-    
+
+    def test_add_comm_1(self):
+        TensorAssertions.assert_equal(Tensor([5]), Tensor([3]) + Tensor([2]))
+
+    def test_add_comm_2(self):
+        TensorAssertions.assert_equal(Tensor([5]), Tensor([2]) + Tensor([3]))
+
+    def test_add_assoc_1(self):
+        TensorAssertions.assert_equal(Tensor([9]), Tensor([2]) + (Tensor([3]) + Tensor([4])))
+
+    def test_add_assoc_2(self):
+        TensorAssertions.assert_equal(Tensor([9]), (Tensor([2]) + Tensor([3])) + Tensor([4]))
+        
     def test_mul_basic(self):
         TensorAssertions.assert_equal(Tensor([6]), Tensor([2]) * Tensor([3]))
 
