@@ -14,7 +14,7 @@ class TensorTest(unittest.TestCase):
     def test_zero_grad(self):
         tensor = Tensor.randn(5)
         tensor.zero_grad()
-        TensorAssertions.assert_zeros(tensor.grad)
+        TensorAssertions.assert_numpy_zeros(tensor.grad)
 
     # test static methods
     def test_randn_1d_length5(self):
