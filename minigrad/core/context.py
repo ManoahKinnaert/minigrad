@@ -18,3 +18,8 @@ class Context:
     def save_for_backward(self, *tensors):
         if not tensors or any(t is None for t in tensors): raise ValueError("You can't save Nonetype for backward pass!")
         self._prev = tensors 
+
+    def copy(self):
+        ctx = Context(self._prev.copy())
+        ctx.function = self._function
+        return ctx

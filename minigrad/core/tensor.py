@@ -108,6 +108,12 @@ class Tensor:
     def zero_grad(self):
         self.grad = np.zeros_like(self.data)
 
+    def copy(self):
+        cpt = Tensor(data=np.copy(self.data))
+        cpt.ctx = self.ctx.copy() if self.ctx is not None else None
+        cpt.grad = np.copy(self.grad)
+        return cpt
+
     @staticmethod
     def randn(*args, **kwargs):
         return Tensor(data=np.random.randn(*args, **kwargs))
