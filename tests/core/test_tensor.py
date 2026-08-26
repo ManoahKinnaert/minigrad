@@ -58,6 +58,7 @@ class TensorTest(unittest.TestCase):
         TensorAssertions.assert_compare_numpy(np.ones_like(random_array), Tensor.ones_like(random_array))
 
     # test basic ops 
+    # test tensor addition
     def test_add_basic(self):
         TensorAssertions.assert_equal(Tensor([3]), Tensor([1]) + Tensor([2]))
 
@@ -72,7 +73,12 @@ class TensorTest(unittest.TestCase):
 
     def test_add_assoc_2(self):
         TensorAssertions.assert_equal(Tensor([9]), (Tensor([2]) + Tensor([3])) + Tensor([4]))
-        
+
+    # test tensor subtraction
+    def test_sub(self):
+        TensorAssertions.assert_equal(Tensor([2]), Tensor([4]) - Tensor([2]))
+
+    # test tensor mul
     def test_mul_basic(self):
         TensorAssertions.assert_equal(Tensor([6]), Tensor([2]) * Tensor([3]))
 
@@ -88,8 +94,6 @@ class TensorTest(unittest.TestCase):
     def test_mul_assoc_2(self):
         TensorAssertions.assert_equal(Tensor([24]), (Tensor([2]) * Tensor([3])) * Tensor([4]))
 
-    def test_sub(self):
-        TensorAssertions.assert_equal(Tensor([2]), Tensor([4]) - Tensor([2]))
 
 if __name__ == "__main__":
     unittest.main()
