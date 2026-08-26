@@ -29,13 +29,13 @@ class LayerTest(unittest.TestCase):
         self.assertEqual(Dot, Layer(1, 1, Dot).activation)
 
     def test_init_weights_shape(self):
-        TensorAssertions.assert_tensor_shape((2, 2), Layer(2, 2).w)
+        TensorAssertions.assert_tensor_shape((2, 2), Layer(2, 2).weights)
 
     def test_init_biases_shape(self):
-        TensorAssertions.assert_tensor_shape((2,), Layer(2, 2).b)
+        TensorAssertions.assert_tensor_shape((2,), Layer(2, 2).biases)
 
     def test_init_biases_zero(self):
-        TensorAssertions.assert_zeros(Layer(2, 2).b.data)
+        TensorAssertions.assert_zeros(Layer(2, 2).biases)
 
 if __name__ == "__main__":
     unittest.main()
