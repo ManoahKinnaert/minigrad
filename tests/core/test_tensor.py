@@ -57,5 +57,15 @@ class TensorTest(unittest.TestCase):
         random_array = np.arange(10).reshape(5, 2)
         TensorAssertions.assert_compare_numpy(np.ones_like(random_array), Tensor.ones_like(random_array))
 
+    # test basic ops 
+    def test_add_basic(self):
+        TensorAssertions.assert_equal(Tensor([3]), Tensor([1]) + Tensor([2]))
+    
+    def test_mul_basic(self):
+        TensorAssertions.assert_equal(Tensor([6]), Tensor([2]) * Tensor([3]))
+
+    def test_sub(self):
+        TensorAssertions.assert_equal(Tensor([2]), Tensor([4]) - Tensor([2]))
+
 if __name__ == "__main__":
     unittest.main()
