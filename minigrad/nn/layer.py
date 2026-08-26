@@ -29,6 +29,12 @@ class Layer(Module):
     @activation.setter
     def activation(self, new: Function): self._activation = new 
 
+    @property
+    def nin(self) -> int: return self._ninputs
+
+    @property
+    def nout(self) -> int: return self._nneurons
+
     def __repr__(self):
         return f"Layer({self._ninputs} Inputs and {self._nneurons} Neurons)"
 
